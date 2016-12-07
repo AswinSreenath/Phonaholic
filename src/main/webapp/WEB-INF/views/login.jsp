@@ -151,6 +151,7 @@ color:#1E7145;
 <ul class="nav navbar-nav navbar-right" style="float: right;">
 		<a href="#"><i class="fa fa-facebook-official fa-2x" aria-hidden="true" style="color:#1E7145;"></i></a>&nbsp&nbsp      
         <a href="#"><i class="fa fa-twitter fa-2x" aria-hidden="true" style="color:#1E7145;"> </i></a>
+        <a href="#"><i class="fa fa-youtube fa-2x" aria-hidden="true" style="color:#1E7145;"> </i></a>
 		</ul>
 </div>
 </footer>
