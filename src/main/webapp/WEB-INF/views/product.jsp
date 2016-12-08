@@ -28,11 +28,11 @@ angular.module("productApp",[])
 <input type="text" ng-model="search">
 <table class="table table-hover">
   <thead>
-  	<tr><th ng-click="sort('productid')">Product ID</th><th ng-click="sort('productname')">Product Name</th><th ng-click="sort('brand')">band</th><th ng-click="sort('category')">Category</th><th ng-click="sort('price')">Price</th></tr>
+  	<tr><th></th><th ng-click="sort('id')">Product ID</th><th ng-click="sort('name')">Product Name</th><th ng-click="sort('brand')">band</th><th ng-click="sort('category')">Category</th><th ng-click="sort('price')">Price</th></tr>
   </thead>
   
   <tbody>
-  <tr ng-repeat="product in prodData | filter:search | orderBy:sortKey:reverse"><td>{{product.id}}</td><td>{{product.name}}</td><td>{{product.brand}}</td><td>{{product.category}}</td><td>{{product.price}}</td><td><button type="submit" class="button">View</button></td></tr>
+  <tr ng-repeat="product in prodData | filter:search | orderBy:sortKey:reverse"><td><img src="images\{{product.id}}.jpg" /></td><td>{{product.id}}</td><td>{{product.name}}</td><td>{{product.brand}}</td><td>{{product.category}}</td><td>{{product.price}}</td><td><button type="submit" class="button">View</button></td></tr>
   </tbody>
 </table>
 	

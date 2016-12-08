@@ -129,6 +129,8 @@ public class HelloController {
 		
 	}
 	
+	
+	
 	@RequestMapping("/edit/{id}")
 	public String editProduct(@PathVariable("id") int id,Model model)
 	{
@@ -144,8 +146,12 @@ public class HelloController {
 		ModelAndView modelandview=new ModelAndView("index");
 		modelandview.addObject("welcomemessage","Hello User!!!!");
 		return modelandview;
-	}*/
-	
+	}*/@RequestMapping("/remove/{id}")
+	public String removeProduct(@PathVariable("id") int id)
+	{
+		productDAO.removeProduct(id);
+		return "admin";
+	}
 	
 
 }
