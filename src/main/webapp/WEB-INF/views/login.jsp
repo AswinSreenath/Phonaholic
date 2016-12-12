@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,7 +160,7 @@
 				type="password" id="password" class="form-control"
 				placeholder="Password" name="password"> <br> <input
 				class="btn btn-lg btn-default btn-block button" type="submit"
-				value="Sign in" /> <a href="#"><font color="#1E7145"><small>New
+				value="Sign in" /> <a href="<c:url value="/register/"/>"><font color="#1E7145"><small>New
 						User Register here</small></font></a>
 
 		</form>

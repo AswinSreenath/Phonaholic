@@ -45,16 +45,16 @@ angular.module("productApp",[])
 
 		<tbody>
 			<tr
-				ng-repeat="product in prodData | filter:search | orderBy:sortKey:reverse">
+				ng-repeat="product in prodData | filter:search | orderBy:sortKey:reverse" style="color: #1E7145">
 				<td><img src="images\{{product.id}}.jpg"
 					style="max-width: 175px; max-height: 100px;" /></td>
-				<td>{{product.id}}</td>
-				<td>{{product.name}}</td>
-				<td>{{product.brand}}</td>
-				<td>{{product.category}}</td>
-				<td>{{product.price}}</td>
-				<td><button type="submit" class="button"
-						onclick="<c:url value="productdetails/{{product.id}}"></c:url>">View</button></td>
+				<td style="vertical-align: middle;"><b>{{product.id}}</b></td>
+				<td style="vertical-align: middle;"><b>{{product.name}}</b></td>
+				<td style="vertical-align: middle;"><b>{{product.brand}}</b></td>
+				<td style="vertical-align: middle;"><b>{{product.category}}</b></td>
+				<td style="vertical-align: middle;"><b>{{product.price}}</b></td>
+				<td><a  class="btn btn-sm button"
+						href="<c:url value="productdetails/{{product.id}}"></c:url>">View</a></td>
 			</tr>
 		</tbody>
 	</table>

@@ -45,7 +45,7 @@
 				<td><form:label path="category">
 						<spring:message text="category" />
 					</form:label></td>
-				<td><form:input path="category" /> <form:errors path="category"></form:errors>
+				<td><form:input   path="category" /> <form:errors path="category"></form:errors>
 				</td>
 			</tr>
 			<tr>
@@ -62,6 +62,8 @@
 				<td><form:input path="price" /> <form:errors path="price"></form:errors>
 				</td>
 			</tr>
+			
+			
 			<tr>
 				<td><form:label path="image">
 						<spring:message text="image" />

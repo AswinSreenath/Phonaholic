@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page session="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,7 +104,7 @@
 				</button>
 				<a class="navbar-brand" href="#"><img
 					style="max-width: 175px; margin-top: 0px;"
-					src="images\Logomakr_2A1smS.png" /></a>
+					src="\phonaholic\images\Logomakr_2A1smS.png" /></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -127,18 +132,7 @@
 					<li><a href="#" id="navig"><i class="fa fa-sign-in"
 							aria-hidden="true">Login</i></a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<form class="navbar-form">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search"
-								style="margin-top: 12px;">
-						</div>
-						<button type="submit" class="btn btn-default btn-sm button"
-							style="margin-top: 12px;">
-							<i class="fa fa-search" aria-hidden="true"></i>Search
-						</button>
-					</form>
-				</ul>
+				
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
@@ -153,18 +147,24 @@
 
 
 	<div class="container">
-		<form class="form-signup">
+		<c:url var="addAction" value="/register/add"></c:url>
+		<form:form class="form-signup" action="${addAction}"
+			modelAttribute="user" method="POST">
 			<h2 style="color: #1E7145">Register</h2>
-			<input type="text" id="firstname" class="form-control"
-				placeholder="First name"><br> <input type="text"
-				id="secondname" class="form-control" placeholder="Second Name"><br>
-			<input type="email" id="emailid" class="form-control"
-				placeholder="Email address"><br> <input type="password"
-				id="password" class="form-control" placeholder="Password"> <br>
-			<input type="password" id="confirmpassword" class="form-control"
-				placeholder="Confirm Pasword"> <br>
+			<form:input type="text" id="name" class="form-control"
+				placeholder="Name" path="name" />
+			<br>
+			<form:input type="text" id="username" class="form-control"
+				placeholder="UserName" path="username" />
+			<br>
+			<form:input type="password" id="password" class="form-control"
+				placeholder="Password" path="password" />
+			<br>
+			<form:input type="text" id="address" class="form-control" placeholder="Adress"
+				path="address" />
+			<br>
 			<button class="btn btn-lg btn-default btn-block button" type="submit">Register</button>
-		</form>
+		</form:form>
 	</div>
 	<br>
 	<br>

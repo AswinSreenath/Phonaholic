@@ -20,14 +20,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.niit.phonaholicbackend.dao.ProductDAO;
-
+import com.niit.phonaholicbackend.dao.UserDAO;
 import com.niit.phonaholicbackend.model.Product;
+import com.niit.phonaholicbackend.model.User;
 
 @Controller
 public class HelloController {
 
 	@Autowired
 	ProductDAO productDAO;
+
+	@Autowired
+	UserDAO userDAO;
 
 	@RequestMapping("/")
 	public ModelAndView Home() {
@@ -46,10 +50,10 @@ public class HelloController {
 	}
 
 	@RequestMapping("/register")
-	public ModelAndView Register() {
+	public String Register(Model model) {
 
-		ModelAndView model = new ModelAndView("register");
-		return model;
+		model.addAttribute("user",new User());
+		return "register";
 
 	}
 
@@ -70,13 +74,21 @@ public class HelloController {
 	}
 
 	@RequestMapping("/productdetails/{id}")
-	public ModelAndView ProductDetails(@PathVariable("id") int id) {
+	public String ProductDetails(@PathVariable("id") int id, Model model) {
 		Product products = productDAO.getProductById(id);
-		String productList = new Gson().toJson(products);
-		ModelAndView model = new ModelAndView("product");
-		model.addObject("productList", productList);
-		return model;
+		model.addAttribute("product", products);
+		return "productdetails";
 
+	}
+
+	@RequestMapping(value = "/register/add", method = RequestMethod.POST)
+	public String addUser( Model model,@ModelAttribute("user") User user) {
+		
+		user.setEnabled(true);
+		user.setRole("ROLE_USER");
+		userDAO.addUser(user);
+		model.addAttribute(user);
+		return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/admin/add", method = RequestMethod.POST)
