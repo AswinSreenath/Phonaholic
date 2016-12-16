@@ -1,7 +1,7 @@
-
+<%@ include file="template\Header.jsp"%>
 <title>Phonaholic</title>
 
-<%@ include file="template\Header.jsp"%>
+
 
 <style>
 .imager div {
@@ -81,7 +81,8 @@
 		<div class="row">
 			<div class="col-sm-6 nopadding">
 				<div class="embed-responsive embed-responsive-16by9">
-					<img class="embed-responsive-item" src="images\lenovok5.jpg" />
+					<a href="productdetails/41"><img class="embed-responsive-item" src="images\lenovok5.jpg" /></a>
+					
 				</div>
 			</div>
 			<div class="col-sm-6 nopadding">

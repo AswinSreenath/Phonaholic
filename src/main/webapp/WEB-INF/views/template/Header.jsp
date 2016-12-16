@@ -115,9 +115,9 @@
 						aria-expanded="false" id="navig">Products<span class="caret"
 							style="color: #1E7145"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value='/basic/'/>'>Basic Phone</a></li>
-							<li><a href='<c:url value='/smart/'/>'>Smart Phone</a></li>
-							<li><a href='<c:url value='/tab'/>'>Tablets</a></li>
+							<li><a href='<c:url value='/product/basicphone'/>'>Basic Phone</a></li>
+							<li><a href='<c:url value='/product/smartphone'/>'>Smart Phone</a></li>
+							<li><a href='<c:url value='/product/tablet'/>'>Tablets</a></li>
 						</ul></li>
 
 					<li><a href='<c:url value='/about/'/>' id="navig">About</a></li>

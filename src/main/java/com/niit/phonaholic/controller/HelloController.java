@@ -40,6 +40,14 @@ public class HelloController {
 		return model;
 
 	}
+	
+	@RequestMapping("/contact")
+	public ModelAndView Contact() {
+
+		ModelAndView model = new ModelAndView("contactus");
+		return model;
+
+	}
 
 	@RequestMapping("/login")
 	public ModelAndView Login() {
@@ -73,9 +81,9 @@ public class HelloController {
 
 	}
 
-	@RequestMapping("/productdetails/{id}")
-	public String ProductDetails(@PathVariable("id") int id, Model model) {
-		Product products = productDAO.getProductById(id);
+	@RequestMapping("/productdetails/{pid}")
+	public String ProductDetails(@PathVariable("pid") int pid, Model model) {
+		Product products = productDAO.getProductById(pid);
 		model.addAttribute("product", products);
 		return "productdetails";
 
@@ -84,8 +92,7 @@ public class HelloController {
 	@RequestMapping(value = "/register/add", method = RequestMethod.POST)
 	public String addUser( Model model,@ModelAttribute("user") User user) {
 		
-		user.setEnabled(true);
-		user.setRole("ROLE_USER");
+		
 		userDAO.addUser(user);
 		model.addAttribute(user);
 		return "redirect:/login";
@@ -103,7 +110,7 @@ public class HelloController {
 				productDAO.addProduct(product);
 
 				String path = request.getSession().getServletContext()
-						.getRealPath("/WEB-INF/images/" + product.getId() + ".jpg");
+						.getRealPath("/WEB-INF/images/" + product.getPid() + ".jpg");
 				File f = new File(path);
 				System.out.println(path);
 				BufferedOutputStream bs = new BufferedOutputStream(new FileOutputStream(f));
@@ -118,7 +125,7 @@ public class HelloController {
 			return "admin";
 
 		} else {
-			if (product.getId() == 0) {
+			if (product.getPid() == 0) {
 				productDAO.addProduct(product);
 			} else {
 				productDAO.updateProduct(product);
@@ -127,19 +134,18 @@ public class HelloController {
 		}
 	}
 
-	@RequestMapping("/product")
-	public ModelAndView Products() {
-		List<Product> products = productDAO.listProducts();
+	@RequestMapping("/product/{category}")
+	public String Products(@PathVariable("category") String category,Model model) {
+		List<Product> products = productDAO.listProductsByCategory(category);
 		String productList = new Gson().toJson(products);
-		ModelAndView model = new ModelAndView("product");
-		model.addObject("productList", productList);
-		return model;
+		model.addAttribute("productList", productList);
+		return "product";
 
 	}
 
-	@RequestMapping("/edit/{id}")
-	public String editProduct(@PathVariable("id") int id, Model model) {
-		model.addAttribute("product", productDAO.getProductById(id));
+	@RequestMapping("/admin/edit/{pid}")
+	public String editProduct(@PathVariable("pid") int pid, Model model) {
+		model.addAttribute("product", productDAO.getProductById(pid));
 		model.addAttribute("listproducts", productDAO.listProducts());
 		return "admin";
 	}
@@ -151,9 +157,9 @@ public class HelloController {
 	 * of the view ModelAndView modelandview=new ModelAndView("index");
 	 * modelandview.addObject("welcomemessage","Hello User!!!!"); return
 	 * modelandview; }
-	 */@RequestMapping("/remove/{id}")
-	public String removeProduct(@PathVariable("id") int id, Model model) {
-		productDAO.removeProduct(id);
+	 */@RequestMapping("/admin/remove/{pid}")
+	public String removeProduct(@PathVariable("pid") int pid, Model model) {
+		productDAO.removeProduct(pid);
 		return "redirect:/admin";
 	}
 

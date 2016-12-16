@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
 <%@ page isELIgnored="false"%>
-
+<%@ include file="template\Header.jsp"%>
 
 <title>Products|Phonaholic</title>
 <%@ include file="template\Header.jsp"%>
@@ -35,7 +35,7 @@ angular.module("productApp",[])
 		<thead>
 			<tr>
 				<th></th>
-				<th ng-click="sort('id')">Product ID</th>
+				<th ng-click="sort('pid')">Product ID</th>
 				<th ng-click="sort('name')">Product Name</th>
 				<th ng-click="sort('brand')">band</th>
 				<th ng-click="sort('category')">Category</th>
@@ -46,15 +46,15 @@ angular.module("productApp",[])
 		<tbody>
 			<tr
 				ng-repeat="product in prodData | filter:search | orderBy:sortKey:reverse" style="color: #1E7145">
-				<td><img src="images\{{product.id}}.jpg"
+				<td><img src="\phonaholic\images\{{product.pid}}.jpg"
 					style="max-width: 175px; max-height: 100px;" /></td>
-				<td style="vertical-align: middle;"><b>{{product.id}}</b></td>
+				<td style="vertical-align: middle;"><b>{{product.pid}}</b></td>
 				<td style="vertical-align: middle;"><b>{{product.name}}</b></td>
 				<td style="vertical-align: middle;"><b>{{product.brand}}</b></td>
 				<td style="vertical-align: middle;"><b>{{product.category}}</b></td>
 				<td style="vertical-align: middle;"><b>{{product.price}}</b></td>
-				<td><a  class="btn btn-sm button"
-						href="<c:url value="productdetails/{{product.id}}"></c:url>">View</a></td>
+				<td style="vertical-align:middle;"><a  class="btn btn-sm button"
+						href="<c:url value='/productdetails/{{product.pid}}'/>">View</a></td>
 			</tr>
 		</tbody>
 	</table>
