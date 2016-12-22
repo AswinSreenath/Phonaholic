@@ -1,4 +1,53 @@
 <%@ include file="template\Header.jsp"%>
+<title>About Us</title>
+
+<br><br><br><br><br>
+<h1 style="text-align:justify; color:#1E7145 ;">The Phonaholic is a project developed in a training program of NIIT.The Phonaholic is a website for you to find suitable mobiles and tablets for your daily needs.We give you the best of the market at lowest prices compared to other stores. </h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

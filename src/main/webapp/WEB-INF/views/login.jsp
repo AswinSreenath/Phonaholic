@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -26,10 +26,10 @@
 <br>
 <br>
 <br>
-<br>
+<br> 
 <br>
 <div class="container">
-	<form class="form-signin" action="login" method="POST">
+	<form class="form-signin" action="/phonaholic/login" method="POST">
 		<h2 class="form-signin-heading" style="color: #1E7145">Login</h2>
 		<input type="text" id="username" class="form-control"
 			placeholder="User Name" name="username"><br> <input

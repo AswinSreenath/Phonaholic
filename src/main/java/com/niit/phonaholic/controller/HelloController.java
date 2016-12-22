@@ -3,12 +3,16 @@ package com.niit.phonaholic.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,12 +23,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.niit.phonaholicbackend.dao.CartDAO;
+import com.niit.phonaholicbackend.dao.ItemDAO;
 import com.niit.phonaholicbackend.dao.ProductDAO;
 import com.niit.phonaholicbackend.dao.UserDAO;
+import com.niit.phonaholicbackend.model.Cart;
+import com.niit.phonaholicbackend.model.Item;
 import com.niit.phonaholicbackend.model.Product;
 import com.niit.phonaholicbackend.model.User;
 
 @Controller
+
 public class HelloController {
 
 	@Autowired
@@ -32,6 +41,8 @@ public class HelloController {
 
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	ItemDAO itemDAO;
 
 	@RequestMapping("/")
 	public ModelAndView Home() {
@@ -40,7 +51,7 @@ public class HelloController {
 		return model;
 
 	}
-	
+
 	@RequestMapping("/contact")
 	public ModelAndView Contact() {
 
@@ -50,17 +61,17 @@ public class HelloController {
 	}
 
 	@RequestMapping("/login")
-	public ModelAndView Login() {
+	public String Login(Model model) {
 
-		ModelAndView model = new ModelAndView("login");
-		return model;
+		model.addAttribute("user", new User());
+		return "login";
 
 	}
 
 	@RequestMapping("/register")
 	public String Register(Model model) {
 
-		model.addAttribute("user",new User());
+		model.addAttribute("user", new User());
 		return "register";
 
 	}
@@ -83,19 +94,59 @@ public class HelloController {
 
 	@RequestMapping("/productdetails/{pid}")
 	public String ProductDetails(@PathVariable("pid") int pid, Model model) {
+
 		Product products = productDAO.getProductById(pid);
 		model.addAttribute("product", products);
 		return "productdetails";
 
 	}
 
+	@RequestMapping(value = "/logout")
+	public ModelAndView logout() {
+		ModelAndView model = new ModelAndView("index");
+		return model;
+	}
+
 	@RequestMapping(value = "/register/add", method = RequestMethod.POST)
-	public String addUser( Model model,@ModelAttribute("user") User user) {
-		
-		
+	public String addUser(Model model, @ModelAttribute("user") User user) {
+
 		userDAO.addUser(user);
 		model.addAttribute(user);
 		return "redirect:/login";
+	}
+
+	@RequestMapping(value = "/cart/{pid}")
+	public String addpCart(@PathVariable("pid") int pid, Principal principal) {
+
+		System.out.println(principal.getName());
+		User user = userDAO.getUserByUsername(principal.getName());
+		Cart cart = user.getCart();
+		Product product = productDAO.getProductById(pid);
+		System.out.println(cart.getCartid());
+		System.out.println(product.getPid());
+
+		List<Item> itemlist = cart.getItems();
+		System.out.println(itemlist.isEmpty());
+		System.out.println(itemlist.size());
+		for (int i = 0; i < itemlist.size(); i++) {
+			if (itemlist.get(i).getProduct().getPid() == product.getPid()) {
+				Item item = itemlist.get(i);
+				item.setQuantity(item.getQuantity() + 1);
+				item.setItemtotal(item.getQuantity() * item.getProduct().getPrice());
+				itemDAO.updateItem(item);
+				return "redirect:/productdetails/" + product.getPid();
+			}
+
+		}
+
+		Item item = new Item();
+		item.setProduct(product);
+		item.setQuantity(1);
+		item.setCart(cart);
+		item.setItemtotal(item.getProduct().getPrice() * item.getQuantity());
+		itemDAO.addItem(item);
+		return "redirect:/productdetails/" + product.getPid();
+
 	}
 
 	@RequestMapping(value = "/admin/add", method = RequestMethod.POST)
@@ -135,11 +186,42 @@ public class HelloController {
 	}
 
 	@RequestMapping("/product/{category}")
-	public String Products(@PathVariable("category") String category,Model model) {
+	public String Products(@PathVariable("category") String category, Model model) {
 		List<Product> products = productDAO.listProductsByCategory(category);
 		String productList = new Gson().toJson(products);
 		model.addAttribute("productList", productList);
 		return "product";
+
+	}
+	@RequestMapping("/cart")
+	public String Products(Model model,Principal principal) {
+		User user=userDAO.getUserByUsername(principal.getName());
+		Cart cart=user.getCart();
+		
+		List<Item> itemlist=itemDAO.gettheItems(cart.getCartid());
+		double total=0;
+		List<Product> productList=new ArrayList<>();
+		for(Item items:itemlist)
+		{
+			productList.add(items.getProduct());
+			total=total+items.getItemtotal();
+			
+		}
+		
+		
+		
+		
+		
+		
+		model.addAttribute("itemlist",itemlist);
+		model.addAttribute("productList",productList);
+		model.addAttribute("totalprice",total);
+		return "cartpage";
+		
+		
+		
+		
+		
 
 	}
 

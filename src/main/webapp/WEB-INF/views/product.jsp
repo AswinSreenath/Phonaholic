@@ -6,7 +6,7 @@
 <%@ include file="template\Header.jsp"%>
 
 <title>Products|Phonaholic</title>
-<%@ include file="template\Header.jsp"%>
+
 
 <script>
 var prod=${productList};

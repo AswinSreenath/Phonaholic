@@ -3,7 +3,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -125,7 +125,7 @@
 							Us</a></li>
 				</ul>
 
-
+<sec:authorize access="isAnonymous()">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href='<c:url value='/register/'/>' id="navig"><i
 							class="fa fa-user">Register</i></a></li>
@@ -133,7 +133,28 @@
 							class="fa fa-sign-in">Login</i></a></li>
 				</ul>
 
+</sec:authorize>
 
+<sec:authorize access="hasRole('ADMIN')">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href='<c:url value='/admin'/>' id="navig">Admin Page</a></li>
+					<li><a href='<c:url value='/logout'/>' id="navig"><i
+							class="fa fa-sign-in">Logout</i></a></li>
+				</ul>
+
+</sec:authorize>
+
+<sec:authorize access="hasRole('USER')">
+
+				<ul class="nav navbar-nav navbar-right">
+				
+					<li><a href='<c:url value='/cart'/>' id="navig"><sec:authentication property="principal.username" /><i
+							class="fa fa-shopping-cart"></i></a></li>
+					<li><a href='<c:url value="/logout"> </c:url>' id="navig"><i
+							class="fa fa-sign-in">Logout</i></a></li>
+				</ul>
+
+</sec:authorize>
 			</div>
 			<!-- /.navbar-collapse -->
 

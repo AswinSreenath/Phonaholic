@@ -81,8 +81,9 @@
 		<div class="row">
 			<div class="col-sm-6 nopadding">
 				<div class="embed-responsive embed-responsive-16by9">
-					<a href="productdetails/41"><img class="embed-responsive-item" src="images\lenovok5.jpg" /></a>
-					
+					<a href="productdetails/41"><img class="embed-responsive-item"
+						src="images\lenovok5.jpg" /></a>
+
 				</div>
 			</div>
 			<div class="col-sm-6 nopadding">
@@ -96,21 +97,22 @@
 </div>
 <div class="container-fluid">
 	<div class="row imager" style="background-color: #f1f4f6;">
-		<div class="col-md-4">
-			<br> <br> <img src="images\smartphone.png"
-				class="img-circle" alt="" width="243" height="241" align="middle"><br>
-			<h4 style="color: #1E7145" align="center">Smart Phone</h4>
-		</div>
-		<div class="col-md-4">
-			<br> <br> <img src="images\oldphone.png" class="img-circle"
-				alt="" width="243" height="241" align="middle"><br>
-			<h4 style="color: #1E7145" align="center">Basic Phone</h4>
-		</div>
-		<div class="col-md-4">
+		<a href='<c:url value='/product/smartphone'/>'><div
+				class="col-md-4">
+				<br> <br> <img src="images\smartphone.png"
+					class="img-circle" alt="" width="243" height="241" align="middle"><br>
+				<h4 style="color: #1E7145" align="center">Smart Phone</h4>
+			</div></a> <a href='<c:url value='/product/basicphone'/>'><div
+				class="col-md-4">
+				<br> <br> <img src="images\oldphone.png"
+					class="img-circle" alt="" width="243" height="241" align="middle"><br>
+				<h4 style="color: #1E7145" align="center">Basic Phone</h4>
+			</div></a>
+		<a href='<c:url value='/product/tablet'/>'><div class="col-md-4">
 			<br> <br> <img src="images\tab.png" class="img-circle"
 				alt="" width="243" height="241" align="middle"><br>
 			<h4 style="color: #1E7145" align="center">Tablet</h4>
-		</div>
+		</div></a>
 	</div>
 </div>
 
