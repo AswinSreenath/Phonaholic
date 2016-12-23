@@ -13,12 +13,12 @@
 <br>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-6" style="padding:0;">
 			<c:if test="${!empty productList }">
 				<table class="table">
 					<tr>
 
-
+						<th></th>
 						<th>Name</th>
 						<th>Brand</th>
 						<th>Category</th>
@@ -70,7 +70,12 @@
 		</div>
 
 	</div>
-	<h4 align="right">Total:${totalprice }</h4>
+	<br>
+	<br>
+	<div align="right">
+	<h4 style="color:#1E7145">Total:${totalprice }</h4>
+	<a href="/phonaholic/cartFlow" class="btn btn-default button"> Checkout </a>
+	</div>
 </div>
 
 

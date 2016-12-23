@@ -6,7 +6,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
 	
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { WebConfig.class };
+		return new Class[] { WebConfig.class,webflowconfig.class};
 	}
 
 	

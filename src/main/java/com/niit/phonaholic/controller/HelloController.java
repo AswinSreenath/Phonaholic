@@ -26,10 +26,12 @@ import com.google.gson.Gson;
 import com.niit.phonaholicbackend.dao.CartDAO;
 import com.niit.phonaholicbackend.dao.ItemDAO;
 import com.niit.phonaholicbackend.dao.ProductDAO;
+import com.niit.phonaholicbackend.dao.ShippingAddressDAO;
 import com.niit.phonaholicbackend.dao.UserDAO;
 import com.niit.phonaholicbackend.model.Cart;
 import com.niit.phonaholicbackend.model.Item;
 import com.niit.phonaholicbackend.model.Product;
+import com.niit.phonaholicbackend.model.ShippingAdress;
 import com.niit.phonaholicbackend.model.User;
 
 @Controller
@@ -43,6 +45,8 @@ public class HelloController {
 	UserDAO userDAO;
 	@Autowired
 	ItemDAO itemDAO;
+	@Autowired
+	ShippingAddressDAO shippingaddressDAO;
 
 	@RequestMapping("/")
 	public ModelAndView Home() {
@@ -115,39 +119,40 @@ public class HelloController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping(value = "/cart/{pid}")
-	public String addpCart(@PathVariable("pid") int pid, Principal principal) {
-
-		System.out.println(principal.getName());
-		User user = userDAO.getUserByUsername(principal.getName());
-		Cart cart = user.getCart();
-		Product product = productDAO.getProductById(pid);
-		System.out.println(cart.getCartid());
-		System.out.println(product.getPid());
-
-		List<Item> itemlist = cart.getItems();
-		System.out.println(itemlist.isEmpty());
-		System.out.println(itemlist.size());
-		for (int i = 0; i < itemlist.size(); i++) {
-			if (itemlist.get(i).getProduct().getPid() == product.getPid()) {
-				Item item = itemlist.get(i);
-				item.setQuantity(item.getQuantity() + 1);
-				item.setItemtotal(item.getQuantity() * item.getProduct().getPrice());
-				itemDAO.updateItem(item);
-				return "redirect:/productdetails/" + product.getPid();
-			}
-
-		}
-
-		Item item = new Item();
-		item.setProduct(product);
-		item.setQuantity(1);
-		item.setCart(cart);
-		item.setItemtotal(item.getProduct().getPrice() * item.getQuantity());
-		itemDAO.addItem(item);
-		return "redirect:/productdetails/" + product.getPid();
-
-	}
+	// @RequestMapping(value = "/cart/{pid}")
+	// public String addpCart(@PathVariable("pid") int pid, Principal principal)
+	// {
+	//
+	// System.out.println(principal.getName());
+	// User user = userDAO.getUserByUsername(principal.getName());
+	// Cart cart = user.getCart();
+	// Product product = productDAO.getProductById(pid);
+	// System.out.println(cart.getCartid());
+	// System.out.println(product.getPid());
+	//
+	// List<Item> itemlist = itemDAO.gettheItems(cart.getCartid());
+	// System.out.println(itemlist.isEmpty());
+	// System.out.println(itemlist.size());
+	// for (int i = 0; i < itemlist.size(); i++) {
+	// if (itemlist.get(i).getProduct().getPid() == product.getPid()) {
+	// Item item = itemlist.get(i);
+	// item.setQuantity(item.getQuantity() + 1);
+	// item.setItemtotal(item.getQuantity() * item.getProduct().getPrice());
+	// itemDAO.updateItem(item);
+	// return "redirect:/productdetails/" + product.getPid();
+	// }
+	//
+	// }
+	//
+	// Item item = new Item();
+	// item.setProduct(product);
+	// item.setQuantity(1);
+	// item.setCart(cart);
+	// item.setItemtotal(item.getProduct().getPrice() * item.getQuantity());
+	// itemDAO.addItem(item);
+	// return "redirect:/productdetails/" + product.getPid();
+	//
+	// }
 
 	@RequestMapping(value = "/admin/add", method = RequestMethod.POST)
 	public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result,
@@ -184,7 +189,12 @@ public class HelloController {
 			return "redirect:/admin";
 		}
 	}
-
+@RequestMapping(value="/shippingaddress/add",method=RequestMethod.POST)
+public String addShippingAddress(@ModelAttribute("shippingaddress") ShippingAdress shippingaddress,BindingResult result,HttpServletRequest request)
+{
+	shippingaddressDAO.addshippingaddress(shippingaddress);
+	return "redirect:/cartFlow?execution=e1s2";
+}
 	@RequestMapping("/product/{category}")
 	public String Products(@PathVariable("category") String category, Model model) {
 		List<Product> products = productDAO.listProductsByCategory(category);
@@ -193,35 +203,56 @@ public class HelloController {
 		return "product";
 
 	}
+
 	@RequestMapping("/cart")
-	public String Products(Model model,Principal principal) {
-		User user=userDAO.getUserByUsername(principal.getName());
-		Cart cart=user.getCart();
-		
-		List<Item> itemlist=itemDAO.gettheItems(cart.getCartid());
-		double total=0;
-		List<Product> productList=new ArrayList<>();
-		for(Item items:itemlist)
-		{
+	public String Products(Model model, Principal principal) {
+		User user = userDAO.getUserByUsername(principal.getName());
+		Cart cart = user.getCart();
+
+		List<Item> itemlist = itemDAO.gettheItems(cart.getCartid());
+		double total = 0;
+		List<Product> productList = new ArrayList<>();
+		for (Item items : itemlist) {
 			productList.add(items.getProduct());
-			total=total+items.getItemtotal();
-			
+			total = total + items.getItemtotal();
+
 		}
-		
-		
-		
-		
-		
-		
-		model.addAttribute("itemlist",itemlist);
-		model.addAttribute("productList",productList);
-		model.addAttribute("totalprice",total);
+
+		model.addAttribute("itemlist", itemlist);
+		model.addAttribute("productList", productList);
+		model.addAttribute("totalprice", total);
 		return "cartpage";
-		
-		
-		
-		
-		
+
+	}
+
+	@RequestMapping("/cart/remove/{itemid}")
+	public String removeItem(@PathVariable("itemid") int itemid, Model model) {
+
+		itemDAO.removeItem(itemDAO.getItemById(itemid));
+		return "redirect:/cart";
+	}
+
+	@RequestMapping("cart/{pid}")
+	public String cartInsertion(@PathVariable("pid") int pid, Principal principal) {
+		User user = userDAO.getUserByUsername(principal.getName());
+		Cart cart = user.getCart();
+		List<Item> itemlist = itemDAO.gettheItems(cart.getCartid());
+
+		for (Item item : itemlist) {
+			if (item.getProduct().getPid() == pid) {
+				item.setQuantity(item.getQuantity() + 1);
+				item.setItemtotal(item.getItemtotal() + item.getProduct().getPrice());
+				itemDAO.updateItem(item);
+				return "redirect:/productdetails/{pid}";
+			}
+		}
+		Item item = new Item();
+		item.setItemtotal(productDAO.getProductById(pid).getPrice());
+		item.setQuantity(1);
+		item.setCart(cart);
+		item.setProduct(productDAO.getProductById(pid));
+		itemDAO.addItem(item);
+		return "redirect:/productdetails/{pid}";
 
 	}
 

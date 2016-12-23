@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="${flowExecutionUrl}&_eventId=event2">Next Page</a>
+
 </body>
 </html>
