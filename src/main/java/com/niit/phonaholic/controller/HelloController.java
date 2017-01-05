@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,14 @@ import com.niit.phonaholicbackend.dao.UserDAO;
 import com.niit.phonaholicbackend.model.Cart;
 import com.niit.phonaholicbackend.model.Item;
 import com.niit.phonaholicbackend.model.Product;
-import com.niit.phonaholicbackend.model.ShippingAdress;
+import com.niit.phonaholicbackend.model.ShippingAddress;
 import com.niit.phonaholicbackend.model.User;
 
 @Controller
 
 public class HelloController {
 
+	
 	@Autowired
 	ProductDAO productDAO;
 
@@ -46,7 +48,9 @@ public class HelloController {
 	@Autowired
 	ItemDAO itemDAO;
 	@Autowired
-	ShippingAddressDAO shippingaddressDAO;
+	ShippingAddressDAO shippingAddressDAO;
+	@Autowired
+	HttpSession httpSession;
 
 	@RequestMapping("/")
 	public ModelAndView Home() {
@@ -119,6 +123,14 @@ public class HelloController {
 		return "redirect:/login";
 	}
 
+	public String addShippingAddress(ShippingAddress shippingAddress) {
+		User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		shippingAddress.setUser(user);
+		shippingAddressDAO.addshippingaddress(shippingAddress);
+		user.setShippingAddress(shippingAddress);
+		return "done";
+	}
+
 	// @RequestMapping(value = "/cart/{pid}")
 	// public String addpCart(@PathVariable("pid") int pid, Principal principal)
 	// {
@@ -189,12 +201,9 @@ public class HelloController {
 			return "redirect:/admin";
 		}
 	}
-@RequestMapping(value="/shippingaddress/add",method=RequestMethod.POST)
-public String addShippingAddress(@ModelAttribute("shippingaddress") ShippingAdress shippingaddress,BindingResult result,HttpServletRequest request)
-{
-	shippingaddressDAO.addshippingaddress(shippingaddress);
-	return "redirect:/cartFlow?execution=e1s2";
-}
+
+	
+
 	@RequestMapping("/product/{category}")
 	public String Products(@PathVariable("category") String category, Model model) {
 		List<Product> products = productDAO.listProductsByCategory(category);

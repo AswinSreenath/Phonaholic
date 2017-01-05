@@ -4,9 +4,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Checkout Confirmation</title>
 </head>
 <body>
+<div>
+<table>
+<th>
+Product name
+</th>
+<th>
+Product details
+</th>
+<th>
+Product price
+</th>
+</table>
+</div>
+<div>
+<table>
+<th>
+Quantity
+</th>
+<th>
+Total
+</th>
+</table>
+</div>
+<div>
+<table>
+<thead>
+Shipping address
+</thead>
+</table>
+</div>
 <a href="${flowExecutionUrl}&_eventId=event2">Next Page</a>
 </body>
 </html>

@@ -51,9 +51,9 @@
 </head>
 <body>
 <div class="container">
-		<c:url var="addAction" value="/shippingaddress/add"></c:url>
-		<form:form class="form-signup" action="${addAction}"
-			modelAttribute="shippingaddress" method="POST">
+		
+		<form:form class="form-signup" 
+			commandName="shippingAddress" >
 			<h2 style="color: #1E7145">ShippingAddress</h2>
 			<form:input type="text" id="phonenumber" class="form-control"
 				placeholder="phone number" path="phonenumber" />
@@ -70,7 +70,7 @@
 			<form:input type="text" id="state" class="form-control"
 				placeholder="State" path="state" />
 			<br>
-			<button class="btn btn-lg btn-default btn-block button" type="submit">Next</button>
+			<input name="_eventId_event1" class="btn btn-lg btn-default btn-block button" type="submit" value="Confirm">
 		</form:form>
 	</div>
 
