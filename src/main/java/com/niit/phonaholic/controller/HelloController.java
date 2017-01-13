@@ -29,17 +29,17 @@ import com.niit.phonaholicbackend.dao.ItemDAO;
 import com.niit.phonaholicbackend.dao.ProductDAO;
 import com.niit.phonaholicbackend.dao.ShippingAddressDAO;
 import com.niit.phonaholicbackend.dao.UserDAO;
+import com.niit.phonaholicbackend.dao.UserOrderDAO;
 import com.niit.phonaholicbackend.model.Cart;
 import com.niit.phonaholicbackend.model.Item;
 import com.niit.phonaholicbackend.model.Product;
 import com.niit.phonaholicbackend.model.ShippingAddress;
 import com.niit.phonaholicbackend.model.User;
+import com.niit.phonaholicbackend.model.UserOrder;
 
 @Controller
-
 public class HelloController {
 
-	
 	@Autowired
 	ProductDAO productDAO;
 
@@ -51,6 +51,10 @@ public class HelloController {
 	ShippingAddressDAO shippingAddressDAO;
 	@Autowired
 	HttpSession httpSession;
+	@Autowired
+	CartDAO cartDAO;
+	@Autowired
+	UserOrderDAO userOrderDAO;
 
 	@RequestMapping("/")
 	public ModelAndView Home() {
@@ -124,12 +128,14 @@ public class HelloController {
 	}
 
 	public String addShippingAddress(ShippingAddress shippingAddress) {
-		User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		shippingAddress.setUser(user);
 		shippingAddressDAO.addshippingaddress(shippingAddress);
 		user.setShippingAddress(shippingAddress);
 		return "done";
 	}
+	
+	
 
 	// @RequestMapping(value = "/cart/{pid}")
 	// public String addpCart(@PathVariable("pid") int pid, Principal principal)
@@ -201,8 +207,6 @@ public class HelloController {
 			return "redirect:/admin";
 		}
 	}
-
-	
 
 	@RequestMapping("/product/{category}")
 	public String Products(@PathVariable("category") String category, Model model) {

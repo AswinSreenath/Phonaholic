@@ -1,28 +1,32 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+http://www.springframework.org/schema/webflow/spring-webflow.xsd"
+	start-state="shippingaddress">
 
-<var name="shippingAddress" class="com.niit.phonaholicbackend.model.ShippingAddress"/>
+	<var name="shippingAddress" class="com.niit.phonaholicbackend.model.ShippingAddress" />
+	<var name="order" class="com.niit.phonaholicbackend.model.UserOrder" />
 
-	<view-state id="shippingaddress" view="shippingaddress.jsp" model="flowScope.shippingAddress">
+
+	<view-state id="shippingaddress" view="shippingaddress.jsp"
+		model="shippingAddress">
 		<transition on="event1" to="shippingAddressMethod"></transition>
 	</view-state>
+
 	<action-state id="shippingAddressMethod">
-	<evaluate expression="HelloController.addShippingAddress(shippingAddress)"></evaluate>
-	
-	
-	<transition on="done" to="checkoutconfirmation"></transition>
-	
+		<evaluate expression="HelloController.addShippingAddress(shippingAddress)"></evaluate>
+		<transition on="done" to="checkoutconfirmation"></transition>
 	</action-state>
 
 	<view-state id="checkoutconfirmation" view="checkoutconfirmation.jsp">
 		<transition on="event2" to="orderplacement"></transition>
 	</view-state>
-
+	
 	<view-state id="orderplacement" view="orderplacement.jsp">
 
 	</view-state>
+
+
 
 
 </flow>
