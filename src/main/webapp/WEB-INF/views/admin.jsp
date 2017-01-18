@@ -3,44 +3,33 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
 <%@ page isELIgnored="false"%>
-<%@ include file="template\Header.jsp"%>
 
+<html>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admimistrator</title>
-<style>
-.form-add {
-	max-width: 330px;
-	padding: 15px;
-	margin: 0 auto;
-}
 
-.form-add .form-control {
-	position: relative;
-	height: auto;
-	padding: 10px;
-	font-size: 16px;
-}
 
-.footer {
-	position: relative;
-	background: white;
-	bottom: 0;
-	width: 100%;
-	padding: 1em;
-}
-</style>
-
-<br>
-<br>
-<br>
-<div class="container-fluid">
-	<h1 align="center">Product List</h1>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"></script>
+<script src="https://use.fontawesome.com/034feea29c.js"></script>
+</head>
+<body>
+	<h1>Product List</h1>
 
 	<c:url var="addAction" value="/admin/add"></c:url>
 
-	<form:form class="form-add" action="${addAction }"
-		commandName="product" enctype="multipart/form-data">
-
+	<form:form action="${addAction }" commandName="product"
+		enctype="multipart/form-data">
+		
 		<table>
 			<c:if test="${!empty product.name }">
 				<tr>
@@ -48,69 +37,77 @@
 							<spring:message text="ID" />
 						</form:label></td>
 					<td><form:input path="pid" readonly="true" size="8"
-							class="form-control" disabled="true" /> <form:hidden path="pid" /></td>
+							disabled="true" /> <form:hidden path="pid" /></td>
 				</tr>
 			</c:if>
-			
 			<tr>
-
-				<td><form:input class="form-control" placeholder="Name"
-						path="name" /> <form:errors path="name"></form:errors></td>
+				<td><form:label path="name">
+						<spring:message text="name" />
+					</form:label></td>
+				<td><form:input path="name" /> <form:errors path="name"></form:errors>
+				</td>
+			</tr>
+			<tr>
+				<td><form:label path="brand">
+						<spring:message text="brand" />
+					</form:label></td>
+				<td><form:input path="brand" /> <form:errors path="brand"></form:errors>
+				</td>
+			</tr>
+			<tr>
+				<td><form:label path="category">
+						<spring:message text="category" />
+					</form:label></td>
+				<td><form:input path="category" /> <form:errors
+						path="category"></form:errors></td>
+			</tr>
+			<tr>
+				<td><form:label path="desc">
+						<spring:message text="description" />
+					</form:label></td>
+				<td><form:input path="desc" /> <form:errors path="desc"></form:errors>
+				</td>
+			</tr>
+			<tr>
+				<td><form:label path="price">
+						<spring:message text="price" />
+					</form:label></td>
+				<td><form:input path="price" /> <form:errors path="price"></form:errors>
+				</td>
 			</tr>
 
-			<tr>
-
-				<td><form:input class="form-control" path="brand"
-						placeholder="Brand" /> <form:errors path="brand"></form:errors></td>
-			</tr>
 
 			<tr>
-
-				<td><form:input class="form-control" path="category"
-						placeholder="Category" /> <form:errors path="category"
-						class="form-control"></form:errors></td>
-			</tr>
-
-			<tr>
-
-				<td><form:input class="form-control" path="desc"
-						placeholder="Description" /> <form:errors path="desc"></form:errors></td>
-			</tr>
-
-			<tr>
-
-				<td><form:input class="form-control" path="price"
-						placeholder="Price" /> <form:errors path="price"></form:errors></td>
-			</tr>
-
-			<tr>
-
-				<td><form:input type="file" class="form-control" path="image" />
-					<form:errors path="image"></form:errors></td>
-			</tr>
-			<br>
+				<td><form:label path="image">
+						<spring:message text="image" />
+					</form:label></td>
+				<td><form:input type="file" path="image" /> <form:errors
+						path="image"></form:errors></td>
 			<tr>
 				<td colspan="2"><c:if test="${!empty product.name }">
-						<input type="submit" class="btn btn-primary form-control"
-							value="<spring:message text="Edit Product"/>" />
+						<input type="submit" class="btn btn-primary" value="<spring:message text="Edit Product"/>" />
 					</c:if> <c:if test="${empty product.name }">
-						<input type="submit" class="btn btn-success form-control"
-							value="<spring:message text="Add Product" />" />
+						<input type="submit" class="btn btn-success" value="<spring:message text="Add Product" />" />
 					</c:if></td>
 			</tr>
 		</table>
-
+	
 	</form:form>
+	
+	
+	
+	
+	
+	
 
 	<c:if test="${!empty listproducts }">
-		<table class="table table-responsive">
+		<table>
 			<tr>
 				<th>Product version</th>
 				<th>Product nam</th>
 				<th>Product Brand</th>
 				<th>Product category</th>
 				<th>ProductDescriptiom</th>
-				<th>Price</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -128,4 +125,5 @@
 			</c:forEach>
 		</table>
 	</c:if>
-</div><%@ include file="template\Footer.jsp"%>
+</body>
+</html>

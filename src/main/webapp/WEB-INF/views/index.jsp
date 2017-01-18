@@ -96,7 +96,7 @@
 	</div>
 </div>
 <div class="container-fluid">
-	<div class="row imager" style="background-color: white;">
+	<div class="row imager" style="background-color: #f1f4f6;">
 		<a href='<c:url value='/product/smartphone'/>'><div
 				class="col-md-4">
 				<br> <br> <img src="images\smartphone.png"
@@ -116,7 +116,19 @@
 	</div>
 </div>
 
-<%@ include file="template\Footer.jsp" %>
+<footer class="footer"
+	style="border-style: solid; border-color: #1E7145; border-width: 1px 0px 0px 0px; background-color: #efefef; padding: 1rem">
+	<div class="container-fluid">
+		<text style="color:#1E7145;font-size:20px;">&copy Phonaholic</text>
+		<ul class="nav navbar-nav navbar-right" style="float: right;">
+			<a href="#"><i class="fa fa-facebook-official fa-2x"
+				aria-hidden="true" style="color: #1E7145;"></i></a>&nbsp&nbsp
+			<a href="#"><i class="fa fa-twitter fa-2x" aria-hidden="true"
+				style="color: #1E7145;"> </i></a>
+		</ul>
+	</div>
+</footer>
 
 
-
+</body>
+</html>

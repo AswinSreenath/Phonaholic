@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,6 +127,16 @@ public class HelloController {
 		return "redirect:/login";
 	}
 
+	public String addShippingAddress(ShippingAddress shippingAddress) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		shippingAddress.setUser(user);
+		shippingAddressDAO.addshippingaddress(shippingAddress);
+		user.setShippingAddress(shippingAddress);
+		return "done";
+	}
+	
+	
+
 	// @RequestMapping(value = "/cart/{pid}")
 	// public String addpCart(@PathVariable("pid") int pid, Principal principal)
 	// {
@@ -212,15 +224,15 @@ public class HelloController {
 
 		List<Item> itemlist = itemDAO.gettheItems(cart.getCartid());
 		double total = 0;
-
+		List<Product> productList = new ArrayList<>();
 		for (Item items : itemlist) {
-
+			productList.add(items.getProduct());
 			total = total + items.getItemtotal();
 
 		}
 
 		model.addAttribute("itemlist", itemlist);
-
+		model.addAttribute("productList", productList);
 		model.addAttribute("totalprice", total);
 		return "cartpage";
 
@@ -238,35 +250,23 @@ public class HelloController {
 		User user = userDAO.getUserByUsername(principal.getName());
 		Cart cart = user.getCart();
 		List<Item> itemlist = itemDAO.gettheItems(cart.getCartid());
-		
-		
-		System.out.println(itemlist.size());
-		Product product = productDAO.getProductById(pid);
-		for (int i = 0; i < itemlist.size(); i++) {
-			if (product.getPid() == itemlist.get(i).getProduct().getPid()) {
-				Item item = itemlist.get(i);
+
+		for (Item item : itemlist) {
+			if (item.getProduct().getPid() == pid) {
 				item.setQuantity(item.getQuantity() + 1);
-				item.setItemtotal(product.getPrice() * item.getQuantity());
-				System.out.println("items" + i);
-				itemDAO.addItem(item);
-
-				return "redirect:/productdetails/"+pid;
+				item.setItemtotal(item.getItemtotal() + item.getProduct().getPrice());
+				itemDAO.updateItem(item);
+				return "redirect:/productdetails/{pid}";
 			}
-
 		}
-
 		Item item = new Item();
-		item.setProduct(product);
+		item.setItemtotal(productDAO.getProductById(pid).getPrice());
 		item.setQuantity(1);
-		item.setItemtotal(product.getPrice()); 
 		item.setCart(cart);
-		System.out.println("first item");
-		try {
-			itemDAO.addItem(item);
-		} catch (Exception e) {
-			System.out.print(e);
-		}
-		return "redirect:/productdetails/"+pid;
+		item.setProduct(productDAO.getProductById(pid));
+		itemDAO.addItem(item);
+		return "redirect:/productdetails/{pid}";
+
 	}
 
 	@RequestMapping("/admin/edit/{pid}")
@@ -274,19 +274,6 @@ public class HelloController {
 		model.addAttribute("product", productDAO.getProductById(pid));
 		model.addAttribute("listproducts", productDAO.listProducts());
 		return "admin";
-	}
-
-	@RequestMapping("/order")
-	public String orderGo(Principal principal, Model model) {
-		User user = userDAO.getUserByUsername(principal.getName());
-		Cart cart = user.getCart();
-		UserOrder userorder = new UserOrder();
-		userorder.setUser(user);
-		userorder.setCart(cart);
-		userOrderDAO.addOrder(userorder);
-		model.addAttribute("orderid", userorder.getUserorderid());
-		return "redirect:/cartFlow";
-
 	}
 
 	// handler method

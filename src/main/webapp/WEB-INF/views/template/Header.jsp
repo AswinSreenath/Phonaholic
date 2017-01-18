@@ -3,8 +3,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +26,6 @@
 
 
 <style>
-
-
 .navbar-fixed-top {
 	min-height: 70px;
 }
@@ -41,14 +38,7 @@
 	background-color: #1E7145;
 	color: white;
 }
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
+
 .navbar-nav>li>a {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -125,10 +115,8 @@ body {
 						aria-expanded="false" id="navig">Products<span class="caret"
 							style="color: #1E7145"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value='/product/basicphone'/>'>Basic
-									Phone</a></li>
-							<li><a href='<c:url value='/product/smartphone'/>'>Smart
-									Phone</a></li>
+							<li><a href='<c:url value='/product/basicphone'/>'>Basic Phone</a></li>
+							<li><a href='<c:url value='/product/smartphone'/>'>Smart Phone</a></li>
 							<li><a href='<c:url value='/product/tablet'/>'>Tablets</a></li>
 						</ul></li>
 
@@ -137,37 +125,36 @@ body {
 							Us</a></li>
 				</ul>
 
-				<sec:authorize access="isAnonymous()">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href='<c:url value='/register/'/>' id="navig"><i
-								class="fa fa-user">Register</i></a></li>
-						<li><a href='<c:url value='/login/'/>' id="navig"><i
-								class="fa fa-sign-in">Login</i></a></li>
-					</ul>
+<sec:authorize access="isAnonymous()">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href='<c:url value='/register/'/>' id="navig"><i
+							class="fa fa-user">Register</i></a></li>
+					<li><a href='<c:url value='/login/'/>' id="navig"><i
+							class="fa fa-sign-in">Login</i></a></li>
+				</ul>
 
-				</sec:authorize>
+</sec:authorize>
 
-				<sec:authorize access="hasRole('ADMIN')">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href='<c:url value='/admin'/>' id="navig">Admin
-								Page</a></li>
-						<li><a href='<c:url value='/logout'/>' id="navig"><i
-								class="fa fa-sign-in">Logout</i></a></li>
-					</ul>
+<sec:authorize access="hasRole('ADMIN')">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href='<c:url value='/admin'/>' id="navig">Admin Page</a></li>
+					<li><a href='<c:url value='/logout'/>' id="navig"><i
+							class="fa fa-sign-in">Logout</i></a></li>
+				</ul>
 
-				</sec:authorize>
+</sec:authorize>
 
-				<sec:authorize access="hasRole('USER')">
+<sec:authorize access="hasRole('USER')">
 
-					<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right">
+				
+					<li><a href='<c:url value='/cart'/>' id="navig"><sec:authentication property="principal.username" /><i
+							class="fa fa-shopping-cart"></i></a></li>
+					<li><a href='<c:url value="/logout"> </c:url>' id="navig"><i
+							class="fa fa-sign-in">Logout</i></a></li>
+				</ul>
 
-						<li><a href='<c:url value='/cart'/>' id="navig"><sec:authentication
-									property="principal.username" /><i class="fa fa-shopping-cart"></i></a></li>
-						<li><a href='<c:url value="/logout"> </c:url>' id="navig"><i
-								class="fa fa-sign-in">Logout</i></a></li>
-					</ul>
-
-				</sec:authorize>
+</sec:authorize>
 			</div>
 			<!-- /.navbar-collapse -->
 
