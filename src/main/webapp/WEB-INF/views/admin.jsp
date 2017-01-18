@@ -51,7 +51,6 @@
 							class="form-control" disabled="true" /> <form:hidden path="pid" /></td>
 				</tr>
 			</c:if>
-			
 			<tr>
 
 				<td><form:input class="form-control" placeholder="Name"
