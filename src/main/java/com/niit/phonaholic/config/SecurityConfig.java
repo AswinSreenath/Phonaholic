@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
 		.antMatchers("/admin/**").access("hasRole('ADMIN')")
-		.antMatchers("/cart/**").access("hasRole('USER')")
+		.antMatchers("/cart/**").access("hasRole('USER')") 
 		.and()
 		.formLogin()
 		.loginPage("/login")

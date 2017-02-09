@@ -21,13 +21,7 @@
 	font-size: 16px;
 }
 
-.footer {
-	position: relative;
-	background: white;
-	bottom: 0;
-	width: 100%;
-	padding: 1em;
-}
+
 </style>
 
 <br>
@@ -44,9 +38,6 @@
 		<table>
 			<c:if test="${!empty product.name }">
 				<tr>
-					<td><form:label path="pid">
-							<spring:message text="ID" />
-						</form:label></td>
 					<td><form:input path="pid" readonly="true" size="8"
 							class="form-control" disabled="true" /> <form:hidden path="pid" /></td>
 				</tr>

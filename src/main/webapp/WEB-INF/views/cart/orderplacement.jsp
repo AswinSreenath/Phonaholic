@@ -6,10 +6,18 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
+<%@ include file="Header.jsp"%>
 <title>SHipped</title>
-<%@ include file="Header.jsp" %>
-<!DOCTYPE html><br><br><br><br><br>
+<!DOCTYPE html>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-<h1 style="text-align:justify; color:#1E7145 ;"><b style="text-align: center;">Thank You!!!!!</b><br>Your order is placed :${order.userorderid}</h1>
+<h1 style="text-align: center; color: #1E7145;">
+	<b>Thank You!!!!!</b><br>Your order is placed
+	:${order.userorderid}
+</h1>
 
-<%@ include file="Footer.jsp" %>
+<%@ include file="Footer.jsp"%>

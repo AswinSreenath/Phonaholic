@@ -1,4 +1,6 @@
 <%@include file="template\Header.jsp"%>
+
+
 <br>
 <br>
 <br>
@@ -11,10 +13,9 @@
 <br>
 <br>
 <br>
-
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-4" style="padding:2em;">
 			
 			<i class="fa fa-phone fa-5x" aria-hidden="true"
 				style="color: #1E7145;padding-left: 44%;"> </i><br>
@@ -24,7 +25,7 @@
 
 		</div>
 
-		<div class="col-sm-4">
+		<div class="col-sm-4" style="padding: 2em;">
 
 			
 			<i class="fa fa-envelope fa-5x" aria-hidden="true"
@@ -35,7 +36,7 @@
 		</div>
 
 
-		<div class="col-sm-4" >
+		<div class="col-sm-4" style="padding: 2em;">
 			
 			<i class="fa fa-map-marker fa-5x" aria-hidden="true"
 				style="color: #1E7145;padding-left:45%;"></i><br>

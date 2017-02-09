@@ -22,13 +22,22 @@
 <script src="https://use.fontawesome.com/034feea29c.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-
+<script>
+	$(function() {
+		$('a').each(function() {
+			if ($(this).prop('href') == window.location.href) {
+				if ($(this).hasClass("navbar-brand")) {
+				} else {
+					$(this).css("background", "#1E7145").css("color", "white");
+				}
+			}
+		});
+	});
+</script>
 
 
 
 <style>
-
-
 .navbar-fixed-top {
 	min-height: 70px;
 }
@@ -41,14 +50,22 @@
 	background-color: #1E7145;
 	color: white;
 }
+
+#navig:FOCUS {
+	background-color: #1E7145;
+	color: white;
+}
+
 html {
-  position: relative;
-  min-height: 100%;
+	position: relative;
+	min-height: 100%;
 }
+
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
 }
+
 .navbar-nav>li>a {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -122,14 +139,13 @@ body {
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false" id="navig">Products<span class="caret"
-							style="color: #1E7145"></span></a>
+						aria-expanded="false" id="navig">Products<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value='/product/basicphone'/>'>Basic
-									Phone</a></li>
-							<li><a href='<c:url value='/product/smartphone'/>'>Smart
-									Phone</a></li>
-							<li><a href='<c:url value='/product/tablet'/>'>Tablets</a></li>
+							<li><a href='<c:url value='/product/basicphone'/>'
+								id="navig">Basic Phone</a></li>
+							<li><a href='<c:url value='/product/smartphone'/>'
+								id="navig">Smart Phone</a></li>
+							<li><a href='<c:url value='/product/tablet'/>' id="navig">Tablets</a></li>
 						</ul></li>
 
 					<li><a href='<c:url value='/about/'/>' id="navig">About</a></li>
